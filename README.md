@@ -298,6 +298,34 @@ GET /api/locations/by-app/{app}?status=Active
 curl "http://localhost:8081/api/locations/by-app/MINT?status=Active"
 ```
 
+#### Get hotel summary for a location
+```
+GET /api/locations/{id}/hotel-summary
+```
+Returns a status breakdown of all hotels in the location's `controlledHotels` array. Use this when a ticket mentions hotel counts or the fix involves adding/removing hotels — it surfaces inactive hotels that `get_location_by_id` alone does not highlight.
+
+**Example:**
+```bash
+curl http://localhost:8081/api/locations/ZQTN9Z/hotel-summary
+```
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "locationId": "ZQTN9Z",
+    "totalInArray": 5,
+    "activeCount": 3,
+    "inactiveCount": 1,
+    "unknownCount": 1,
+    "inactiveHotelCodes": ["LOULJ"],
+    "unknownHotelCodes": ["XXXXX"]
+  },
+  "message": "OK",
+  "count": 1
+}
+```
+
 #### Count locations
 ```
 GET /api/locations/count?app=MARSHA&status=Active
